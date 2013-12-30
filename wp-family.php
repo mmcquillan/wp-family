@@ -6,7 +6,7 @@ Description: Wordpress Plugin for Family Genealogy Records using the Native Word
 Version: 0.8
 Author: Matt McQuillan
 Author URI: http://mattmcquillan.com
-License: Apache v2
+License: GPLv2
 */
 
 require_once(plugin_dir_path( __FILE__ ) . 'functions_family.php');
