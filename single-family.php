@@ -31,6 +31,8 @@ get_header(); ?>
                 <header class="entry-header"><h1 class="entry-title"><?php the_title();?></h1></header>
                 <div class="entry-content">
 
+                    <?php if ( has_post_thumbnail() ) { the_post_thumbnail(); } ?>
+
                     <table class="family-details">
                         <tr>
                             <td class="family-details-label">Gender</td>
@@ -80,7 +82,19 @@ get_header(); ?>
                         </tr>
                         <tr>
                             <td class="family-details-label">Marriage</td>
-                            <td class="family-details-value"></td>
+                            <td class="family-details-value">
+                                <?php
+                                    $marriages = family_marriage_decode($person['family_marriages'][0]);
+                                    $pre = '';
+                                    foreach($marriages as $m) {
+                                        $spouse = get_post($m['spouse']);
+                                        $plink = get_permalink($spouse->ID);
+                                        echo $pre . '<a href="' . $plink . '">' . $spouse->post_title . '</a><br/>';
+                                        echo $m['day'] . ' ' . $m['month'] . ' ' . $m['year'] . ' - ' . $m['place'] . '<br/>';
+                                        $pre = '<br/>';
+                                    }
+                                ?>
+                            </td>
                         </tr>
                         <tr>
                             <td class="family-details-label">Children</td>

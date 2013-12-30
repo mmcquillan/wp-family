@@ -115,4 +115,67 @@ function family_date_display($date) {
     return family_date_get_day($date) . ' ' . family_date_get_month($date) . ' ' . family_date_get_year($date);
 }
 
+function family_marriage_decode($marriages) {
+
+    if($marriages == '') {
+        return array();
+    }
+
+    // legend: YYYYMMDD:SpousePostID:Place|YYYYMMDD:SpousePostID:Place
+    $r = explode('|', $marriages);
+    foreach($r as &$m) {
+        $x = explode(':', $m);
+        $m = array(
+            'spouse' => $x[1],
+            'year' => family_date_get_year($x[0]),
+            'month' => family_date_get_month($x[0]),
+            'day' => family_date_get_day($x[0]),
+            'place' => $x[2]
+        );
+    }
+    return $r;
+
+}
+
+function family_marriage_encode($marriages) {
+
+    $r = array();
+    foreach($marriages as $m) {
+        $x = family_date_encode($m['year'], $m['month'], $m['day']) . ':' . $m['spouse'] . ':' . str_replace(array(':','|'), ' ', $m['place']);
+        array_push($r, $x);
+    }
+    return implode("|", $r);
+
+}
+
+function family_update_marriages($marriages, $spouse, $year, $month, $day, $place) {
+
+    // convert marriage to an array
+    $ms = family_marriage_decode($marriages);
+
+    // loop and look for this marriage
+    $update = false;
+    foreach($ms as &$m) {
+        if($m['spouse'] == $spouse) {
+            $m['year'] = $year;
+            $m['month'] = $month;
+            $m['day'] = $day;
+            $m['place'] = $place;
+            $update = true;
+        }
+    }
+
+    if(!$update) {
+        array_push($ms, array(
+            'spouse' => $spouse,
+            'year' => $year,
+            'month' => $month,
+            'day' => $day,
+            'place' => $place
+        ));
+    }
+
+    return family_marriage_encode($ms);
+}
+
 ?>

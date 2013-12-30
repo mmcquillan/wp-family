@@ -35,7 +35,7 @@ function display_family_details( $family ) {
     $family_death_place    = $person['family_death_place'][0];
     $family_father         = $person['family_father'][0];
     $family_mother         = $person['family_mother'][0];
-    $family_marriages      = $person['family_marriages'][0];
+    $family_marriages      = family_marriage_decode($person['family_marriages'][0]);
     $family_private        = $person['family_private'][0];
 
     ?>
@@ -202,6 +202,87 @@ function display_family_details( $family ) {
                      }
                      ?>
                 </select>
+            </td>
+        </tr>
+        <tr valign="top">
+            <td>
+                <label for="family_marriages">Marriages</label>
+            </td>
+            <td>
+    <?php 
+    $querystr = "
+        SELECT p.* 
+        FROM $wpdb->posts p 
+        WHERE p.post_status = 'publish' 
+          AND p.post_type = 'family' 
+          AND p.post_date < NOW() 
+          AND p.id != $family->ID 
+        ORDER BY p.post_name
+    ";
+    $pageposts = $wpdb->get_results($querystr, OBJECT);
+    foreach($family_marriages as $m) { ?>
+                <select id="family_marriage_spouse" name="family_marriage_spouse[]">
+                    <option value="0"></option>
+                    <?php
+                     foreach ($pageposts as $post) {
+                        echo '<option value="' . $post->ID . '" ' . selected($m['spouse'], $post->ID) . '>' . $post->post_title . '</option>';
+                     }
+                     ?>
+                </select>
+                <select id="family_marriage_day" name="family_marriage_day[]">
+                <?php
+                    foreach(family_day_array() as $day) {
+                        echo '<option value="' . $day . '" ' . selected($m['day'], $day) . '>' . $day . '</option>';
+                    }
+                ?>
+                </select>
+                <select id="family_marriage_month" name="family_marriage_month[]">
+                <?php
+                    foreach(family_month_array() as $month) {
+                        echo '<option value="' . $month . '" ' . selected($m['month'], $month) . '>' . $month . '</option>';
+                    }
+                ?>
+                </select>
+                <select id="family_marriage_year" name="family_marriage_year[]">
+                <?php
+                    foreach(family_year_array() as $year) {
+                        echo '<option value="' . $year . '" ' . selected($m['year'], $year) . '>' . $year . '</option>';
+                    }
+                ?>
+                </select>
+                <input type="text" id="family_marriage_place" name="family_marriage_place[]" value="<?php echo $m['place']; ?>" />
+                <br/>
+    <?php } ?>
+                <select id="family_marriage_spouse" name="family_marriage_spouse[]">
+                    <option value="0"></option>
+                    <?php
+                     foreach ($pageposts as $post) {
+                        echo '<option value="' . $post->ID . '">' . $post->post_title . '</option>';
+                     }
+                     ?>
+                </select>
+                <select id="family_marriage_day" name="family_marriage_day[]">
+                <?php
+                    foreach(family_day_array() as $day) {
+                        echo '<option value="' . $day . '">' . $day . '</option>';
+                    }
+                ?>
+                </select>
+                <select id="family_marriage_month" name="family_marriage_month[]">
+                <?php
+                    foreach(family_month_array() as $month) {
+                        echo '<option value="' . $month . '" >' . $month . '</option>';
+                    }
+                ?>
+                </select>
+                <select id="family_marriage_year" name="family_marriage_year[]">
+                <?php
+                    foreach(family_year_array() as $year) {
+                        echo '<option value="' . $year . '">' . $year . '</option>';
+                    }
+                ?>
+                </select>
+                <input type="text" id="family_marriage_place" name="family_marriage_place[]" value="" />
             </td>
         </tr>
         <tr valign="top">
