@@ -3,7 +3,7 @@
 Plugin Name: WP-Family
 Plugin URI: https://github.com/mmcquillan/wp-family
 Description: Wordpress Plugin for Family Genealogy Records using the Native Wordpress Structure
-Version: 1.0
+Version: 0.8
 Author: Matt McQuillan
 Author URI: http://mattmcquillan.com
 License: Apache v2

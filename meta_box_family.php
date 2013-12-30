@@ -297,6 +297,14 @@ function display_family_details( $family ) {
             </td>
         </tr>
     </table>
+    <br/><br/>
+
+    <strong>Editing Notes:</strong>
+    <ul>
+        <li>If you want to display a picture of the family member, use the featured image.</li>
+        <li>To add multiple marriages, add the first one, then update the post to add the next. Repeat as needed.</li>
+        <li>To delete a marriage, set the spouse name to the empty value and update, but you must also do this on the spouses side.</li>
+    </ul>
     <?php
 }
 
