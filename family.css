@@ -1,0 +1,25 @@
+﻿
+.family-details {
+  width: 100%;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-spacing: 5px;
+}
+
+.family-details-label
+{
+  background-color: #DDDDDD;
+  width: 25%;
+  text-align: right;
+  vertical-align: top;
+  padding-right: 10px;
+  font-weight: bold;
+}
+
+.family-details-value
+{
+  width: 75%;
+  border: 1px solid #DDDDDD;
+}
