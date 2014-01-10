@@ -28,7 +28,7 @@ get_header(); ?>
             ?>
 
             <article id="post-<?php the_ID();?>" class="status-publish hentry">
-                <header class="entry-header"><h1 class="entry-title"><?php the_title();?></h1></header>
+                <header class="entry-header"><h1 class="entry-title"><?php echo $person['family_first_name'][0] . ' ' . $person['family_middle_name'][0] . ' ' . $person['family_last_name'][0]; ?></h1></header>
                 <div class="entry-content">
 
                     <?php if ( has_post_thumbnail() ) { the_post_thumbnail(); } ?>
